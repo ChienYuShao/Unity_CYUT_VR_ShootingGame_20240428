@@ -12,11 +12,13 @@ public class EnemySystem : MonoBehaviour
 
     private string parMove = "²¾°Ê¼Æ­È";
     private string parAttack = "Ä²µo§ðÀ»";
+    private bool isAttacking;
 
 
     private void Update()
     {
         Move();
+        Attack();
     }
 
     private void Move()
@@ -24,5 +26,17 @@ public class EnemySystem : MonoBehaviour
         agent.SetDestination(playerPoint.position);
 
         ani.SetFloat(parMove, agent.velocity.magnitude / agent.speed);
+    }
+
+    private void Attack()
+    {
+        if (isAttacking) return; 
+        //print($"<color=#6f9>¶ZÂ÷¡G{agent.remainingDistance}</color>");
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            ani.SetTrigger(parAttack);
+            isAttacking = true;
+        }
     }
 }
